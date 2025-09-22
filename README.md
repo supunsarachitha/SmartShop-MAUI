@@ -1,1 +1,1 @@
-# SmartShop-Web-App
+# SmartShop-MAUI
