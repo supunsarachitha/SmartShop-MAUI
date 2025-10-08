@@ -1,13 +1,13 @@
 using SmartShop.MAUI.ViewModels;
 
-namespace SmartShop.MAUI.Views;
-
-public partial class LoginPage : ContentPage
+namespace SmartShop.MAUI.Views
 {
-	public LoginPage()
-	{
-		InitializeComponent();
-        BindingContext = new LoginViewModel();
-
+    public partial class LoginPage : ContentPage
+    {
+        public LoginPage(LoginViewModel viewModel)
+        {
+            InitializeComponent();
+            BindingContext = viewModel;
+        }
     }
 }

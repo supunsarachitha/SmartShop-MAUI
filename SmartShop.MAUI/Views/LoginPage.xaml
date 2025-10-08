@@ -5,23 +5,18 @@
              x:Class="SmartShop.MAUI.Views.LoginPage"
              Title="Login"
              BackgroundColor="Transparent">
-    <ContentPage.BindingContext>
-        <vm:LoginViewModel />
-    </ContentPage.BindingContext>
 
     <ScrollView>
         <StackLayout Padding="30" Spacing="20" VerticalOptions="Center">
             <Label Text="Welcome" FontSize="24" HorizontalOptions="Center" />
             <Entry Placeholder="Username"
-                   Text="{Binding Username}"
-                   IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
+                   Text="{Binding Username}"  />
             <Entry Placeholder="Password"
                    Text="{Binding Password}"
-                   IsPassword="True"
-                   IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
+                   IsPassword="True"  />
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}" />
             <Button Text="Login"
-                    Command="{Binding LoginAsyncCommand}"
+                    Command="{Binding LoginCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
             <Button Text="Forgot Password"
                     Command="{Binding ForgotPasswordCommand}"

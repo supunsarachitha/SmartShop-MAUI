@@ -1,11 +1,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SmartShop.MAUI.Services;
 using System.Threading.Tasks;
 
 namespace SmartShop.MAUI.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
+        private readonly AuthService _authService;
+
         [ObservableProperty]
         private string username;
 
@@ -18,21 +21,42 @@ namespace SmartShop.MAUI.ViewModels
         [ObservableProperty]
         private string errorMessage;
 
-        [RelayCommand]
-        private async Task LoginAsync()
+        public LoginViewModel(AuthService authService)
         {
+            _authService = authService;
+        }
+
+        [RelayCommand]
+        private void Login()
+        {
+            Console.WriteLine("LoginAsyncCommand executed");
+
+            if (IsBusy) return;
+
             IsBusy = true;
             ErrorMessage = string.Empty;
-            await Task.Delay(1000); // Simulate login process
-            if (Username == "admin" && Password == "password")
+
+            try
             {
-                // Successful login logic here
+                var result = _authService.LoginAsync<object>(Username, Password);
+
+                if (result != null)
+                {
+                    // Handle successful login logic here
+                }
+                else
+                {
+                    ErrorMessage = "Invalid username or password.";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ErrorMessage = "Invalid username or password.";
+                ErrorMessage = $"Login failed: {ex.Message}";
             }
-            IsBusy = false;
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         [RelayCommand]
