@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SmartShop.MAUI.Services;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SmartShop.MAUI.ViewModels
 {
@@ -27,7 +28,7 @@ namespace SmartShop.MAUI.ViewModels
         }
 
         [RelayCommand]
-        private void Login()
+        private async void Login()
         {
             Console.WriteLine("LoginAsyncCommand executed");
 
@@ -38,15 +39,20 @@ namespace SmartShop.MAUI.ViewModels
 
             try
             {
-                var result = _authService.LoginAsync<object>(Username, Password);
+                // Define a class to represent the data structure
+                var result = await _authService.LoginAsync<LoginResponse>(Username, Password);
 
-                if (result != null)
+                if (result != null && result.Success && result.Data != null)
                 {
+                    // Extract the token
+                    string token = result.Data.Token;
+
                     // Handle successful login logic here
+                    Console.WriteLine($"Token: {token}");
                 }
                 else
                 {
-                    ErrorMessage = "Invalid username or password.";
+                    ErrorMessage = result?.Message ?? "Invalid username or password.";
                 }
             }
             catch (Exception ex)
@@ -63,6 +69,12 @@ namespace SmartShop.MAUI.ViewModels
         private void ForgotPassword()
         {
             // Implement forgot password logic
+        }
+
+        // Define a class to represent the data structure
+        public class LoginResponse
+        {
+            public string Token { get; set; }
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartShop.MAUI.Models.Requests;
+using SmartShop.MAUI.Models.Responses;
+
 
 namespace SmartShop.MAUI.Services
 {
@@ -17,7 +15,7 @@ namespace SmartShop.MAUI.Services
             _baseUrl = baseUrl;
         }
 
-        public async Task<T> LoginAsync<T>(string username, string password)
+        public async Task<ApplicationResponse<T>> LoginAsync<T>(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException("Username cannot be null or empty.", nameof(username));
@@ -25,12 +23,18 @@ namespace SmartShop.MAUI.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new ArgumentException("Password cannot be null or empty.", nameof(password));
 
-            var url = $"{_baseUrl}/auth/login";
-            var data = new { Username = username, Password = password };
+            var url = $"{_baseUrl}/api/Auth/login";
+
+            var data = new LoginRequest
+            {
+                 UserName = username,
+                 Password = password
+            };
 
             try
             {
-                var response = await _apiService.PostAsync<object, T>(url, data);
+                var response = await _apiService.PostAsync<LoginRequest, ApplicationResponse<T>>(url, data);
+
                 if (response == null)
                     throw new InvalidOperationException($"The API service returned a null response for URL: {url}");
                 

@@ -8,6 +8,6 @@ namespace SmartShop.MAUI.Helpers
 {
     public static class AppConstants
     {
-        public const string ApiBaseUrl = "https://api.smartshop.com";
+        public const string ApiBaseUrl = "http://localhost:5218";
     }
 }
