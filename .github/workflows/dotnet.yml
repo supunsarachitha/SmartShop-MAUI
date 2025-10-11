@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-maui-android:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest   # Changed from ubuntu-latest to windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
       - name: Install MAUI workload
         run: dotnet workload install maui
 
-      # Optional: Install Android SDK (for emulator or APK signing, usually for more complex workflows)
+      # On Windows, Android SDK is typically available, but you may install it if needed for signing or emulation.
       # - name: Install Android SDK
       #   uses: reactivecircus/android-emulator-runner@v2
 
