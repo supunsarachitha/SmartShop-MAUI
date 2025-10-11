@@ -1,0 +1,36 @@
+name: .NET MAUI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-maui-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      # Optional: Install Android SDK (for emulator or APK signing, usually for more complex workflows)
+      # - name: Install Android SDK
+      #   uses: reactivecircus/android-emulator-runner@v2
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build MAUI Android
+        run: dotnet build --no-restore -f:net9.0-android
+
+      # Optional: Run tests (if you have platform-agnostic tests)
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
