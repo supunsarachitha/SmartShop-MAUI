@@ -1,8 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SmartShop.MAUI.Models.Responses;
 using SmartShop.MAUI.Services;
-using System.Threading.Tasks;
-using System.Text.Json;
 
 namespace SmartShop.MAUI.ViewModels
 {
@@ -11,16 +10,16 @@ namespace SmartShop.MAUI.ViewModels
         private readonly AuthService _authService;
 
         [ObservableProperty]
-        private string username;
+        private string username = string.Empty;
 
         [ObservableProperty]
-        private string password;
+        private string password = string.Empty;
 
         [ObservableProperty]
         private bool isBusy;
 
         [ObservableProperty]
-        private string errorMessage;
+        private string errorMessage = string.Empty;
 
         public LoginViewModel(AuthService authService)
         {
@@ -28,9 +27,9 @@ namespace SmartShop.MAUI.ViewModels
         }
 
         [RelayCommand]
-        private async void Login()
+        private async Task Login()
         {
-            Console.WriteLine("LoginAsyncCommand executed");
+            Console.WriteLine("Login executed");
 
             if (IsBusy) return;
 
@@ -39,7 +38,6 @@ namespace SmartShop.MAUI.ViewModels
 
             try
             {
-                // Define a class to represent the data structure
                 var result = await _authService.LoginAsync<LoginResponse>(Username, Password);
 
                 if (result != null && result.Success && result.Data != null)
@@ -47,7 +45,6 @@ namespace SmartShop.MAUI.ViewModels
                     // Extract the token
                     string token = result.Data.Token;
 
-                    // Handle successful login logic here
                     Console.WriteLine($"Token: {token}");
                 }
                 else
@@ -70,11 +67,7 @@ namespace SmartShop.MAUI.ViewModels
         {
             // Implement forgot password logic
         }
+         
 
-        // Define a class to represent the data structure
-        public class LoginResponse
-        {
-            public string Token { get; set; }
-        }
     }
 }
