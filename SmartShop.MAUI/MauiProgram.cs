@@ -2,6 +2,7 @@
 using SmartShop.MAUI.Helpers;
 using SmartShop.MAUI.Services;
 using SmartShop.MAUI.ViewModels;
+using CommunityToolkit.Maui;
 
 namespace SmartShop.MAUI;
 
@@ -17,6 +18,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+            builder.UseMauiCommunityToolkit();
 
 #if DEBUG
 		builder.Logging.AddDebug();
@@ -32,7 +34,6 @@ public static class MauiProgram
 
         // Register view models
         builder.Services.AddTransient<LoginViewModel>();
-
 		return builder.Build();
 	}
 }

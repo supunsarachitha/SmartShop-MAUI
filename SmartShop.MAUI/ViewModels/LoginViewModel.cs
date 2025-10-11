@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SmartShop.MAUI.Models.Responses;
 using SmartShop.MAUI.Services;
+using System.Windows.Input;
 
 namespace SmartShop.MAUI.ViewModels
 {
@@ -19,11 +20,11 @@ namespace SmartShop.MAUI.ViewModels
         private bool isBusy;
 
         [ObservableProperty]
-        private string errorMessage = string.Empty;
+        private string alertMessage = string.Empty;
 
         public LoginViewModel(AuthService authService)
         {
-            _authService = authService;
+            _authService = authService; 
         }
 
         [RelayCommand]
@@ -34,7 +35,7 @@ namespace SmartShop.MAUI.ViewModels
             if (IsBusy) return;
 
             IsBusy = true;
-            ErrorMessage = string.Empty;
+            AlertMessage = string.Empty;
 
             try
             {
@@ -46,15 +47,21 @@ namespace SmartShop.MAUI.ViewModels
                     string token = result.Data.Token;
 
                     Console.WriteLine($"Token: {token}");
+
+                    // Navigate to HomePage.xaml
+                    await Shell.Current.GoToAsync("//HomePage");
+
+
+                    //Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
                 }
                 else
                 {
-                    ErrorMessage = result?.Message ?? "Invalid username or password.";
+                    AlertMessage = result?.Message ?? "Invalid username or password.";
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"Login failed: {ex.Message}";
+                AlertMessage = $"Login failed: {ex.Message}";
             }
             finally
             {
@@ -68,6 +75,5 @@ namespace SmartShop.MAUI.ViewModels
             // Implement forgot password logic
         }
          
-
     }
 }

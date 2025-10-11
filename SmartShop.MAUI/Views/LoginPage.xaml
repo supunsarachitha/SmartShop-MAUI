@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:SmartShop.MAUI.ViewModels"
-             x:Class="SmartShop.MAUI.Views.LoginPage"
-             Title="Login"
-             BackgroundColor="Transparent">
+             x:Class="SmartShop.MAUI.Views.LoginPage" 
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#000428" Offset="0.0" />
+            <!-- Midnight Blue -->
+            <GradientStop Color="#004e92" Offset="0.5" />
+            <!-- Deep Sky Blue -->
+            <GradientStop Color="#00c6ff" Offset="1.0" />
+            <!-- Light Cyan -->
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ScrollView>
         <StackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            <Label Text="Welcome" FontSize="24" HorizontalOptions="Center" />
+
+            <Label Text="Welcome" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"
+                   TextColor="#FFFFFF" />
+
             <Entry Placeholder="Username"
-                   Text="{Binding Username}"  />
+                   Text="{Binding Username}"
+                   BackgroundColor="#004e92" 
+                   TextColor="#FFFFFF" />
+
             <Entry Placeholder="Password"
                    Text="{Binding Password}"
-                   IsPassword="True"  />
-            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}" />
+                   IsPassword="True"
+                   BackgroundColor="#004e92"  
+                   TextColor="#FFFFFF" />
+
+            <Label Text="{Binding AlertMessage}" 
+                   TextColor="#FFD700" 
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}" 
+                   HorizontalTextAlignment="Center"/>
+
             <Button Text="Login"
                     Command="{Binding LoginCommand}"
+                    Style="{StaticResource LoginButtonStyle}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
+
             <Button Text="Forgot Password"
                     Command="{Binding ForgotPasswordCommand}"
                     BackgroundColor="Transparent"
-                    TextColor="Blue"
+                    TextColor="#FFFFFF"  
                     FontAttributes="Italic" />
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+            <ActivityIndicator 
+                IsRunning="{Binding IsBusy}" 
+                IsVisible="{Binding IsBusy}"
+                Color="#FFFFFF" />
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
