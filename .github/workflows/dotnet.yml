@@ -1,14 +1,14 @@
-name: .NET MAUI
+name: Build .NET MAUI Windows App
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-  build-maui-android:
-    runs-on: windows-latest   # Changed from ubuntu-latest to windows-latest
+  build-maui-windows:
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -16,21 +16,11 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: '8.0.x'
 
       - name: Install MAUI workload
         run: dotnet workload install maui
 
-      # On Windows, Android SDK is typically available, but you may install it if needed for signing or emulation.
-      # - name: Install Android SDK
-      #   uses: reactivecircus/android-emulator-runner@v2
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build MAUI Android
-        run: dotnet build --no-restore -f:net9.0-android
-
-      # Optional: Run tests (if you have platform-agnostic tests)
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
+      # Build for Windows
+      - name: Build MAUI Windows App
+        run: dotnet build --configuration Release -f:net8.0-windows
