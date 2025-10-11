@@ -1,4 +1,6 @@
-﻿namespace SmartShop.MAUI;
+﻿using SmartShop.MAUI.Views;
+
+namespace SmartShop.MAUI;
 
 public partial class AppShell : Shell
 {

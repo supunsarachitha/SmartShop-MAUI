@@ -1,9 +1,13 @@
-namespace SmartShop.MAUI.Views;
+using SmartShop.MAUI.ViewModels;
 
-public partial class LoginPage : ContentPage
+namespace SmartShop.MAUI.Views
 {
-	public LoginPage()
-	{
-		InitializeComponent();
-	}
+    public partial class LoginPage : ContentPage
+    {
+        public LoginPage(LoginViewModel viewModel)
+        {
+            InitializeComponent();
+            BindingContext = viewModel;
+        }
+    }
 }
