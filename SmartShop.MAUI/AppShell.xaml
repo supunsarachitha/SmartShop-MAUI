@@ -4,11 +4,22 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SmartShop.MAUI.Views"
-    Title="SmartShop.MAUI">
+    Title="SmartShop.MAUI" >
 
     <ShellContent
-        Title="Home"
+        Title="Login"
         ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
+        Route="LoginPage"
+        FlyoutItemIsVisible="False" />
+
+    <ShellContent
+        Title="HomePage"
+        ContentTemplate="{DataTemplate local:HomePage}"
+        Route="HomePage" />
+
+    <MenuItem
+        Text="Logout"
+        
+         />
 
 </Shell>
